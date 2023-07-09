@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -117,6 +118,9 @@ class OrderController extends Controller
         $order->update($input);
 
 
+        DB::table('order_detail')->where('id_order', $order['id'])->delete();
+
+
         for ($i = 0; $i < count($input['id_produk']); $i++) {
             # code...
             OrderDetail::create([
@@ -134,11 +138,73 @@ class OrderController extends Controller
         ]);
     }
 
+    public function ubah_status(Request $request, Order $order)
+    {
+        $order->update([
+            'status' => $request->status
+        ]);
+
+        return response()->json([
+            'message' => 'status updated',
+            'payload' => $order
+        ]);
+    }
+
+    public function dikonfirmasi()
+    {
+        $order = Order::where('status', 'Dikonfirmasi')->get();
+
+        return response()->json([
+            'payload' => $order
+        ]);
+    }
+
+    public function dikemas()
+    {
+        $order = Order::where('status', 'Dikemas')->get();
+
+        return response()->json([
+            'payload' => $order
+        ]);
+    }
+
+    public function dikirim()
+    {
+        $order = Order::where('status', 'Dikirim')->get();
+
+        return response()->json([
+            'payload' => $order
+        ]);
+    }
+
+    public function diterima()
+    {
+        $order = Order::where('status', 'Diterima')->get();
+
+        return response()->json([
+            'payload' => $order
+        ]);
+    }
+
+    public function selesai()
+    {
+        $order = Order::where('status', 'Selesai')->get();
+
+        return response()->json([
+            'payload' => $order
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Order $order)
     {
         //
+        $order->delete();
+
+        return response()->json([
+            'message' => 'deleted success'
+        ]);
     }
 }

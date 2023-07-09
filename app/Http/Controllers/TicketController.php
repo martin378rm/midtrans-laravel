@@ -62,7 +62,13 @@ class TicketController extends Controller
                     ],
                     'bank_transfer' => [
                         'bank' => $request->bank
-                    ]
+                    ],
+                    'customer_details' => [
+                        'email' => $request->email,
+                        'first_name' => 'CUSTOMER',
+                        'last_name' => $request->name,
+                        'phone' => '6281 1234 1234'
+                    ],
                 ]);
 
             // response gagal
