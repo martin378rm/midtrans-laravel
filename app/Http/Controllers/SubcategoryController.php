@@ -74,10 +74,13 @@ class SubcategoryController extends Controller
     // /**
     //  * Display the specified resource.
     //  */
-    // public function show(Category $category)
-    // {
-    //     //
-    // }
+    public function show(Subcategory $subcategory)
+    {
+        //
+        return response()->json([
+            'data' => $subcategory
+        ]);
+    }
 
     // /**
     //  * Show the form for editing the specified resource.

@@ -50,7 +50,8 @@ class MemberController extends Controller
             "detail_alamat" => "required",
             "no_hp" => "required",
             "email" => "required",
-            "password" => "required",
+            "password" => "required|same:konfirmasi_password",
+            "konfirmasi_password" => "required|same:password"
 
         ]);
 
@@ -74,10 +75,19 @@ class MemberController extends Controller
     // /**
     //  * Display the specified resource.
     //  */
-    // public function show(Category $members)
-    // {
-    //     //
-    // }
+    public function show($id)
+    {
+        //
+        $members = Member::where('id', $id)->get()->first();
+        if ($members) {
+            return response()->json([
+                'data' => $members
+            ]);
+        }
+        return response()->json([
+            'message' => 'Not Found'
+        ]);
+    }
 
     // /**
     //  * Show the form for editing the specified resource.

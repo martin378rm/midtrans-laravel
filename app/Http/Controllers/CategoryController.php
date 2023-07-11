@@ -76,10 +76,12 @@ class CategoryController extends Controller
     // /**
     //  * Display the specified resource.
     //  */
-    // public function show(Category $category)
-    // {
-    //     //
-    // }
+    public function show(Category $category)
+    {
+        return response()->json([
+            'data' => $category
+        ]);
+    }
 
     // /**
     //  * Show the form for editing the specified resource.

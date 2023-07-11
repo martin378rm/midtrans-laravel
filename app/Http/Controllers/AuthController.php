@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class AuthController extends Controller
 {
@@ -18,6 +25,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+
     protected function respondWithToken($token)
     {
         return response()->json([
@@ -26,4 +34,91 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
+
+    public function register(Request $request)
+    {
+        // validasi
+
+        $validator = Validator::make($request->all(), [
+            "nama_member" => "required",
+            "provinsi" => "required",
+            "kabupaten" => "required",
+            "kecamatan" => "required",
+            "detail_alamat" => "required",
+            "no_hp" => "required",
+            "email" => "required|email",
+            "password" => "required|same:konfirmasi_password|min:8",
+            "konfirmasi_password" => "required|same:password"
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return response()->json([
+                "message" => $validator->messages()
+            ], 422);
+
+        }
+
+        $input = $request->all();
+        $input['password'] = bcrypt($request->password);
+
+        $members = Member::create($input);
+
+        return response()->json([
+            "data" => $members
+        ]);
+    }
+
+    public function login_member(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "email" => "required|email",
+            "password" => "required|min:8"
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        $member = Member::where('email', $request->email)->first();
+        if ($member) {
+            if (Hash::check($request->password, $member->password)) {
+                $request->session()->regenerate();
+                return response()->json([
+                    'message' => 'Success',
+                    'data' => $member
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'failed',
+                    'data' => 'password wrong'
+                ]);
+            }
+
+        } else {
+            return response()->json([
+                'message' => 'failed',
+                'data' => 'Email wrong'
+            ]);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('api')->logout();
+
+        return response()->json(['message' => 'Logged out successfully']);
+    }
+
+    public function logout_member()
+    {
+        Session::flush();
+
+        return redirect('/login');
+    }
+
 }

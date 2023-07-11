@@ -76,10 +76,13 @@ class SliderController extends Controller
     // /**
     //  * Display the specified resource.
     //  */
-    // public function show(Slider $slider)
-    // {
-    //     //
-    // }
+    public function show(Slider $slider)
+    {
+        //
+        return response()->json([
+            'data' => $slider
+        ]);
+    }
 
     // /**
     //  * Show the form for editing the specified resource.
