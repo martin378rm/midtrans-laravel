@@ -13,16 +13,28 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    //
-    public function login()
+
+    public function index()
     {
+        return view('auth.login');
+    }
+    //
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (auth()->attempt($credentials)) {
+            $token = Auth::guard('api')->attempt($credentials);
+            // dd($token);
+            cookie()->queue(cookie('token', $token, 60));
+            return redirect('/dashboard');
         }
 
-        return $this->respondWithToken($token);
+        return redirect()->back()->with('message', 'Email atau Password salah');
     }
 
 
@@ -109,16 +121,19 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('api')->logout();
+        // Auth::guard('api')->logout();
 
-        return response()->json(['message' => 'Logged out successfully']);
+        // return response()->json(['message' => 'Logged out successfully']);
+        Session::flush();
+
+        return redirect('/login');
     }
 
     public function logout_member()
     {
         Session::flush();
 
-        return redirect('/login');
+        return redirect('/login_member');
     }
 
 }
