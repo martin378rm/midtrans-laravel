@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 
     <title>SB Admin 2 - Login</title>
 
@@ -47,10 +48,10 @@
                                         {{session()->get('message')}}
                                         </div>
                                     @endif
-                                    <form class="user" method="POST" action="/login">
+                                    <form class="form-login user" method="POST" action="/login">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                            <input type="email" class="form-control form-control-user email"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address..." name="email" >
                                                 @error('email')
@@ -60,7 +61,7 @@
                                                 @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
+                                            <input type="password" class="form-control form-control-user password"
                                                 id="exampleInputPassword" placeholder="Password" name="password">
                                                 @error('password')
                                                     <small class="text-danger">
@@ -99,7 +100,68 @@
     <script src="{{asset('admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{asset('admin/js/sb-admin-2.min.js"')}}></script>
+    <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
+
+    <script>
+        $( ()=> {
+
+            // function set cookie
+            const setCookie = (name,value,days) => {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days*24*60*60*1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+            }
+
+            function checkSession() {
+                var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+                if (!cookieValue) {
+                    // Cookie tidak ada atau telah kedaluwarsa
+                    alert("Sesi Anda telah habis. Silakan masuk kembali.");
+                    deleteCookie('token');
+                    // window.location.href = '/login'
+                }
+            }
+
+                function deleteCookie(cookieName) {
+                document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                }
+
+
+
+            $('.form-login').submit((e)=> {
+                e.preventDefault()
+
+
+                const email = $('.email').val();
+                const password = $('.password').val();
+                const csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+
+                $.ajax({
+                    url : '/login',
+                    type : 'POST',
+                    data : {
+                        email : email,
+                        password : password,
+                        _token : csrf_token
+                    },
+                    success : function (data) {
+                        if (!data.success) {
+                            alert(data.message)
+                        }
+
+                        // setCookie('token', data.token, 7)
+                        window.location.href = '/dashboard'
+                        // checkSession();  
+                    }
+                })
+            })
+        })
+    </script>
 
 </body>
 

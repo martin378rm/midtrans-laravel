@@ -28,6 +28,10 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        return view('kategori.index');
+    }
     /**
      * Show the form for creating a new resource.
      */

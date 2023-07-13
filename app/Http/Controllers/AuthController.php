@@ -30,11 +30,22 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $token = Auth::guard('api')->attempt($credentials);
             // dd($token);
-            cookie()->queue(cookie('token', $token, 60));
-            return redirect('/dashboard');
+            // cookie()->queue(cookie('token', $token, 60));
+            return response()
+                ->json([
+                    'success' => true,
+                    'message' => 'login sukses',
+                    'token' => $token
+                ])
+                ->withCookie(cookie('token', $token, 60 * 24 * 7, null, null, false, true))
+            ;
         }
 
-        return redirect()->back()->with('message', 'Email atau Password salah');
+        return response()->json([
+            'success' => false,
+            'message' => 'email atau password salah'
+        ]);
+        // return redirect()->back()->with('message', 'Email atau Password salah');
     }
 
 
@@ -125,6 +136,12 @@ class AuthController extends Controller
 
         // return response()->json(['message' => 'Logged out successfully']);
         Session::flush();
+
+        // Auth::logout();
+
+        // $request->session()->invalidate();
+
+        // $request->session()->regenerate();
 
         return redirect('/login');
     }

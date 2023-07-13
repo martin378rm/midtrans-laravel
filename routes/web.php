@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 
 /*
@@ -27,3 +28,7 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 // dashboard
 Route::get('dashboard', [DashboardController::class, 'index']);
+
+// category
+
+Route::get('kategori', [CategoryController::class, 'list']);

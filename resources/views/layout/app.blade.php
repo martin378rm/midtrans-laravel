@@ -156,6 +156,7 @@
                 <div class="container-fluid">
 
                     <h1 class="h3 mb-4 text-gray-800">@yield('title')</h1>
+                    @yield('content')
                 </div>
                 <!-- /.container-fluid -->
 
@@ -212,6 +213,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
+
+    @stack('js')
 
 </body>
 
