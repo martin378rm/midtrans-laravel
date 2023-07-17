@@ -116,21 +116,6 @@
                 document.cookie = name + "=" + (value || "")  + expires + "; path=/";
             }
 
-            function checkSession() {
-                var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-                if (!cookieValue) {
-                    // Cookie tidak ada atau telah kedaluwarsa
-                    alert("Sesi Anda telah habis. Silakan masuk kembali.");
-                    deleteCookie('token');
-                    // window.location.href = '/login'
-                }
-            }
-
-                function deleteCookie(cookieName) {
-                document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                }
-
-
 
             $('.form-login').submit((e)=> {
                 e.preventDefault()
@@ -155,8 +140,8 @@
                         }
 
                         // setCookie('token', data.token, 7)
+                        localStorage.setItem('token', data.token)
                         window.location.href = '/dashboard'
-                        // checkSession();  
                     }
                 })
             })

@@ -214,6 +214,14 @@
     <!-- Custom scripts for all pages-->
     <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
 
+    <script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
+
     @stack('js')
 
 </body>

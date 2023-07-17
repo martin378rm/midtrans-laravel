@@ -37,7 +37,7 @@ class AuthController extends Controller
                     'message' => 'login sukses',
                     'token' => $token
                 ])
-                ->withCookie(cookie('token', $token, 60 * 24 * 7, null, null, false, true))
+                // ->withCookie(cookie('token', $token, 60 * 24 * 7, null, null, false, true))
             ;
         }
 
