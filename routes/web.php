@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SliderController;
+use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\TestimoniController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +35,15 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::get('dashboard', [DashboardController::class, 'index']);
 
 // category
-
 Route::get('kategori', [CategoryController::class, 'list']);
+
+// subcategory
+Route::get('subkategori', [SubcategoryController::class, 'list']);
+// slider
+Route::get('slider', [SliderController::class, 'list']);
+// product
+Route::get('barang', [ProductController::class, 'list']);
+// testimoni
+Route::get('testimoni', [TestimoniController::class, 'list']);
+// review
+Route::get('review', [ReviewController::class, 'list']);

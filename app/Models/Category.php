@@ -10,4 +10,9 @@ class Category extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,17 +14,31 @@ class SubcategoryController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        // $this->middleware('auth')->only(['list']);
+        // $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
 
     public function index()
     {
         //
-        $sub_category = Subcategory::all();
+        // $sub_category = Subcategory::all();
+        // $sub_category = DB::table('subcategories')
+        //     ->join('categories', 'subcategories.category_id', '=', 'categories.id')
+        //     ->select('subcategories.*', 'categories.nama_kategory')
+        //     ->get();
+
+        $sub_category = Subcategory::with('categories')->get();
 
         return response()->json([
+            "success" => true,
             "data" => $sub_category
         ]);
+    }
+
+    public function list()
+    {
+        $categories = Category::all();
+        return view('subkategori.index', compact('categories'));
     }
 
     /**
@@ -67,6 +83,7 @@ class SubcategoryController extends Controller
         $sub_category = Subcategory::create($input);
 
         return response()->json([
+            "success" => true,
             "data" => $sub_category
         ]);
     }
@@ -74,13 +91,16 @@ class SubcategoryController extends Controller
     // /**
     //  * Display the specified resource.
     //  */
-    public function show(Subcategory $subcategory)
+    public function show($id)
     {
         //
+        $subcategory = Subcategory::find($id);
         return response()->json([
+            'success' => true,
             'data' => $subcategory
         ]);
     }
+
 
     // /**
     //  * Show the form for editing the specified resource.
@@ -126,6 +146,7 @@ class SubcategoryController extends Controller
         $sub_category->update($input);
 
         return response()->json([
+            "success" => true,
             'message' => 'update successfully'
         ]);
     }
@@ -141,6 +162,7 @@ class SubcategoryController extends Controller
         $sub_category->delete();
 
         return response()->json([
+            "success" => true,
             'message' => "deleted success"
         ]);
     }
