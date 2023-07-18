@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SliderController extends Controller
@@ -13,7 +12,14 @@ class SliderController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->only(['list']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
+    }
+
+    public function list()
+    {
+        $sliders = Slider::all();
+        return view('slider.index', compact('sliders'));
     }
     /**
      * Display a listing of the resource.
@@ -24,6 +30,7 @@ class SliderController extends Controller
         $slider = Slider::all();
 
         return response()->json([
+            "success" => true,
             "data" => $slider
         ]);
     }
@@ -69,6 +76,8 @@ class SliderController extends Controller
         $slider = Slider::create($input);
 
         return response()->json([
+            'success' => true,
+            'message' => 'succesfully',
             "data" => $slider
         ]);
     }
@@ -80,6 +89,7 @@ class SliderController extends Controller
     {
         //
         return response()->json([
+            "success" => true,
             'data' => $slider
         ]);
     }
@@ -127,6 +137,7 @@ class SliderController extends Controller
         $slider->update($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'update successfully'
         ]);
     }
@@ -142,6 +153,7 @@ class SliderController extends Controller
         $slider->delete();
 
         return response()->json([
+            'success' => true,
             'message' => "deleted success"
         ]);
     }

@@ -1,13 +1,13 @@
 @extends('layout.app')
 
-@section('title', 'Data Kategori')
+@section('title', 'Data Slider')
 
 @section('content')
 
 <div class="card shadow">
     <div class="card-header">
         <h4 class="card-title">
-            Data Kategori
+            Data Slider
         </h4>
     </div>
 
@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>Nomor</th>
-                        <th>Nama Kategori</th>
+                        <th>Nama Slider</th>
                         <th>Deskripsi</th>
                         <th>Gambar</th>
                         <th>Aksi</th>
@@ -50,8 +50,8 @@
             <div class="col-md-12">
                 <form class="form-kategori" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="">Nama Kategori</label>
-                        <input type="text" class="form-control" name="nama_kategory" placeholder="Nama Kategori">
+                        <label for="">Nama Slider</label>
+                        <input type="text" class="form-control" name="nama_slider" placeholder="Nama Kategori">
                     </div>
                     <div class="form-group">
                         <label for="">Deskripsi</label>
@@ -84,7 +84,7 @@
         $(function () {
 
             $.ajax({
-                url : '/api/categories',
+                url : '/api/sliders',
                 success : function ({data}) {
 
                     let row;
@@ -93,7 +93,7 @@
                         row += `
                         <tr>
                             <td>${index+1}</td>
-                            <td>${value.nama_kategory}</td>
+                            <td>${value.nama_slider}</td>
                             <td>${value.description}</td>
                             <td><img src='/uploads/${value.image}' width="100" height="100"></td>
                             <td>
@@ -116,7 +116,7 @@
                 confirm_dialog = confirm('Apakah anda yakin');
                 if (confirm_dialog) {
                     $.ajax({
-                        url : '/api/categories/' + id,
+                        url : '/api/sliders/' + id,
                         type : 'DELETE',
                         headers : {
                             'Authorization' :  token
@@ -135,7 +135,7 @@
             // todo create kategori
             $('.modal-tambah').click(function () {
                 $('#modal-form').modal('show')
-                $('input[name="nama_kategory"]').val('')
+                $('input[name="nama_slider"]').val('')
                 $('textarea[name="description"]').val('')
 
                 $('.form-kategori').submit(function (e) {
@@ -145,7 +145,7 @@
 
 
                     $.ajax({
-                        url : '/api/categories',
+                        url : '/api/sliders',
                         type : 'POST',
                         data :formdata,
                         cache : false,
@@ -170,8 +170,8 @@
                $('#modal-form').modal('show')
                const id = $(this).data('id')
 
-               $.get('/api/categories/' + id, function({data}){
-                   $('input[name="nama_kategory"]').val(data.nama_kategory)
+               $.get('/api/sliders/' + id, function({data}){
+                   $('input[name="nama_slider"]').val(data.nama_slider)
                    $('textarea[name="description"]').val(data.description)
                 });
 
@@ -182,7 +182,7 @@
                     const formdata = new FormData(this);
 
                     $.ajax({
-                        url : `/api/categories/${id}?_method=PUT`,
+                        url : `/api/sliders/${id}?_method=PUT`,
                         type : 'POST',
                         data :formdata,
                         cache : false,
