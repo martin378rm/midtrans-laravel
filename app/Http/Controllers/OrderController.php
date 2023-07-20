@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -14,20 +16,26 @@ class OrderController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->only(['list', 'dikonfirmasi_list', 'dikemas_list', 'dikirim_list', 'diterima_list', 'selesai_list']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy', 'ubah_status', 'baru', 'dikonfirmasi', 'dikemas', 'dikirim', 'diterima', 'selesai']);
     }
-
     /**
      * Display a listing of the resource.
      */
+
+    public function list()
+    {
+        return view('pesanan.index');
+    }
     public function index()
     {
         //
-        $orders = Order::all();
+        $orders = Order::with('member')->get();
 
         return response()->json([
             "data" => $orders
         ]);
+
     }
 
     /**
@@ -143,58 +151,67 @@ class OrderController extends Controller
 
     public function ubah_status(Request $request, Order $order)
     {
+
         $order->update([
             'status' => $request->status
         ]);
 
         return response()->json([
             'message' => 'status updated',
-            'payload' => $order
+            'data' => $order
         ]);
     }
 
-    public function dikonfirmasi()
+    public function baru()
     {
-        $order = Order::where('status', 'Dikonfirmasi')->get();
+        $order = Order::with('member')->where('status', 'Baru')->get();
 
         return response()->json([
-            'payload' => $order
+            'data' => $order
+        ]);
+    }
+    public function dikonfirmasi()
+    {
+        $order = Order::with('member')->where('status', 'Dikonfirmasi')->get();
+
+        return response()->json([
+            'data' => $order
         ]);
     }
 
     public function dikemas()
     {
-        $order = Order::where('status', 'Dikemas')->get();
+        $order = Order::with('member')->where('status', 'Dikemas')->get();
 
         return response()->json([
-            'payload' => $order
+            'data' => $order
         ]);
     }
 
     public function dikirim()
     {
-        $order = Order::where('status', 'Dikirim')->get();
+        $order = Order::with('member')->where('status', 'Dikirim')->get();
 
         return response()->json([
-            'payload' => $order
+            'data' => $order
         ]);
     }
 
     public function diterima()
     {
-        $order = Order::where('status', 'Diterima')->get();
+        $order = Order::with('member')->where('status', 'Diterima')->get();
 
         return response()->json([
-            'payload' => $order
+            'data' => $order
         ]);
     }
 
     public function selesai()
     {
-        $order = Order::where('status', 'Selesai')->get();
+        $order = Order::with('member')->where('status', 'Selesai')->get();
 
         return response()->json([
-            'payload' => $order
+            'data' => $order
         ]);
     }
 
@@ -209,5 +226,26 @@ class OrderController extends Controller
         return response()->json([
             'message' => 'deleted success'
         ]);
+    }
+
+    public function dikonfirmasi_list()
+    {
+        return view('pesanan.dikonfirmasi');
+    }
+    public function dikemas_list()
+    {
+        return view('pesanan.dikemas');
+    }
+    public function dikirim_list()
+    {
+        return view('pesanan.dikirim');
+    }
+    public function diterima_list()
+    {
+        return view('pesanan.diterima');
+    }
+    public function selesai_list()
+    {
+        return view('pesanan.selesai');
     }
 }

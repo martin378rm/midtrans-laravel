@@ -21,7 +21,7 @@ Route::group([
     Route::post('admin', [AuthController::class, 'login'])->name('admin');
     Route::post('register', [AuthController::class, 'register'])->name('register');
     Route::post('logout', [AuthController::class, 'logout']);
-    
+
 });
 
 
@@ -39,12 +39,14 @@ Route::group([
         'orders' => OrderController::class
     ]);
 
+    Route::get('order/baru', [OrderController::class, 'baru']);
     Route::get('order/dikonfirmasi', [OrderController::class, 'dikonfirmasi']);
     Route::get('order/dikemas', [OrderController::class, 'dikemas']);
     Route::get('order/dikirim', [OrderController::class, 'dikirim']);
     Route::get('order/diterima', [OrderController::class, 'diterima']);
     Route::get('order/selesai', [OrderController::class, 'selesai']);
-    Route::get('order/ubah_status/{order}', [OrderController::class, 'ubah_status']);
+    //post method to ubah status
+    Route::post('order/ubah_status/{order}', [OrderController::class, 'ubah_status']);
     Route::get('reports', [ReportController::class, 'index']);
 });
 
