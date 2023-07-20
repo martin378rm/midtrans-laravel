@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Data Kategori')
+@section('title', 'Data Testimoni')
 
 @section('content')
 
@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>Nomor</th>
-                        <th>Nama Kategori</th>
+                        <th>Nama Testimoni</th>
                         <th>Deskripsi</th>
                         <th>Gambar</th>
                         <th>Aksi</th>
@@ -50,16 +50,16 @@
             <div class="col-md-12">
                 <form class="form-kategori" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="">Nama Kategori</label>
-                        <input type="text" class="form-control" name="nama_kategory" placeholder="Nama Kategori">
+                        <label for="">Nama Testimoni</label>
+                        <input type="text" class="form-control" name="nama_testimoni" placeholder="Nama Testimoni">
                     </div>
                     <div class="form-group">
                         <label for="">Deskripsi</label>
-                        <textarea type="text" class="form-control" cols="30" rows="10" name="description" placeholder="Deskripsi"></textarea>
+                        <textarea type="text" class="form-control" cols="30" rows="10" name="deskripsi" placeholder="Deskripsi"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Gambar</label>
-                        <input type="file" class="form-control" name="image" placeholder="Gambar">
+                        <input type="file" class="form-control" name="gambar" placeholder="Gambar">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block ">submit</button>
@@ -84,7 +84,7 @@
         $(function () {
 
             $.ajax({
-                url : '/api/categories',
+                url : '/api/testimonis',
                 success : function ({data}) {
 
                     let row;
@@ -93,9 +93,9 @@
                         row += `
                         <tr>
                             <td>${index+1}</td>
-                            <td>${value.nama_kategory}</td>
-                            <td>${value.description}</td>
-                            <td><img src='/uploads/${value.image}' width="100" height="100"></td>
+                            <td>${value.nama_testimoni}</td>
+                            <td>${value.deskripsi}</td>
+                            <td><img src='/uploads/${value.gambar}' width="100" height="100"></td>
                             <td>
                                 <a data-toggle="modal" href="#modal-form" data-id="${value.id}" class="btn btn-warning modal-ubah">Edit</a>
                                 <a  href="#" data-id="${value.id}" class="btn btn-danger btn-hapus">Hapus</a>
@@ -116,7 +116,7 @@
                 confirm_dialog = confirm('Apakah anda yakin');
                 if (confirm_dialog) {
                     $.ajax({
-                        url : '/api/categories/' + id,
+                        url : '/api/testimonis/' + id,
                         type : 'DELETE',
                         headers : {
                             'Authorization' :  token
@@ -135,8 +135,8 @@
             // todo create kategori
             $('.modal-tambah').click(function () {
                 $('#modal-form').modal('show')
-                $('input[name="nama_kategory"]').val('')
-                $('textarea[name="description"]').val('')
+                $('input[name="nama_testimoni"]').val('')
+                $('textarea[name="deskripsi"]').val('')
 
                 $('.form-kategori').submit(function (e) {
                     e.preventDefault()
@@ -145,7 +145,7 @@
 
 
                     $.ajax({
-                        url : '/api/categories',
+                        url : '/api/testimonis',
                         type : 'POST',
                         data :formdata,
                         cache : false,
@@ -170,9 +170,9 @@
                $('#modal-form').modal('show')
                const id = $(this).data('id')
 
-               $.get('/api/categories/' + id, function({data}){
-                   $('input[name="nama_kategory"]').val(data.nama_kategory)
-                   $('textarea[name="description"]').val(data.description)
+               $.get('/api/testimonis/' + id, function({data}){
+                   $('input[name="nama_testimoni"]').val(data.nama_testimoni)
+                   $('textarea[name="deskripsi"]').val(data.deskripsi)
                 });
 
 
@@ -182,7 +182,7 @@
                     const formdata = new FormData(this);
 
                     $.ajax({
-                        url : `/api/categories/${id}?_method=PUT`,
+                        url : `/api/testimonis/${id}?_method=PUT`,
                         type : 'POST',
                         data :formdata,
                         cache : false,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,8 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->only(['list']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -21,11 +23,21 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $product = Product::all();
+        $product = Product::with('category', 'subcategory')->get();
 
         return response()->json([
+            "success" => true,
             "data" => $product
         ]);
+    }
+
+    public function list()
+    {
+
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        // $this->middleware('auth');
+        return view('produk.index', compact('categories', 'subcategories'));
     }
 
     /**
@@ -78,6 +90,7 @@ class ProductController extends Controller
         $product = Product::create($input);
 
         return response()->json([
+            "success" => true,
             "data" => $product
         ]);
     }
@@ -85,11 +98,12 @@ class ProductController extends Controller
     // /**
     //  * Display the specified resource.
     //  */
-    public function show(Product $product)
+    public function show($id)
     {
         //
-
+        $product = Product::where('id', $id)->with('category', 'subcategory')->get();
         return response()->json([
+            "success" => true,
             'data' => $product
         ]);
     }
@@ -120,8 +134,8 @@ class ProductController extends Controller
             "sku" => "required",
             "ukuran" => "required",
             "warna" => "required",
-            "description" => "required",
-            "image" => "required|image|mimes:svg,jpeg,png,jpg,gif|max:2048"
+            "description" => "required"
+            // "image" => "required|image|mimes:svg,jpeg,png,jpg,gif|max:2048"
 
         ]);
 
@@ -147,6 +161,7 @@ class ProductController extends Controller
         $product->update($input);
 
         return response()->json([
+            "success" => true,
             'message' => 'update successfully'
         ]);
     }
@@ -162,6 +177,7 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json([
+            "success" => true,
             'message' => "deleted success"
         ]);
     }

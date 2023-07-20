@@ -67,7 +67,6 @@
                         <a class="collapse-item" href="/slider">Data Slider</a>
                         <a class="collapse-item" href="/barang">Data Barang</a>
                         <a class="collapse-item" href="/testimoni">Data Testimoni</a>
-                        <a class="collapse-item" href="/reviews">Data Reviews</a>
                     </div>
                 </div>
             </li>

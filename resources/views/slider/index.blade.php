@@ -51,7 +51,7 @@
                 <form class="form-kategori" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="">Nama Slider</label>
-                        <input type="text" class="form-control" name="nama_slider" placeholder="Nama Kategori">
+                        <input type="text" class="form-control" name="nama_slider" placeholder="Nama Slider">
                     </div>
                     <div class="form-group">
                         <label for="">Deskripsi</label>

@@ -11,7 +11,8 @@ class ReviewController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->only(['list']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -22,9 +23,16 @@ class ReviewController extends Controller
         $review = Review::all();
 
         return response()->json([
-            "payload" => $review
+            "success" => true,
+            "data" => $review
         ]);
 
+    }
+
+    public function list()
+    {
+        // $this->middleware('auth');
+        return view('reviews.index');
     }
 
     /**
@@ -61,6 +69,7 @@ class ReviewController extends Controller
         $review = Review::create($request->all());
         // dd($review);
         return response()->json([
+            "success" => true,
             "data" => $review
         ]);
     }
@@ -72,6 +81,7 @@ class ReviewController extends Controller
     {
         //
         return response()->json([
+            "success" => true,
             'data' => $review
         ]);
     }
@@ -111,6 +121,7 @@ class ReviewController extends Controller
         $review->update($request->all());
 
         return response()->json([
+            "success" => true,
             'message' => 'update successfully'
         ]);
     }
@@ -125,6 +136,7 @@ class ReviewController extends Controller
         $review->delete();
 
         return response()->json([
+            "success" => true,
             'message' => "deleted success"
         ]);
     }
