@@ -10,10 +10,11 @@ class ReportController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->only(['index']);
+        $this->middleware('auth:api')->only(['get_laporan']);
     }
 
-    public function index(Request $request)
+    public function get_laporan(Request $request)
     {
         $report = DB::table('order_detail')
             ->join('products', 'products.id', '=', 'order_detail.id_produk')
@@ -29,7 +30,13 @@ class ReportController extends Controller
             ->get();
 
         return response()->json([
-            "payload" => $report
+            "data" => $report
         ]);
+    }
+
+
+    public function index()
+    {
+        return view('report.index');
     }
 }
