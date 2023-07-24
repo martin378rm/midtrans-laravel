@@ -64,7 +64,7 @@
             $.ajax({
                 url : '/api/order/selesai',
                 headers : {
-                            'Authorization' :  token
+                            'Authorization' :  'Bearer ' +  token
                         },
                 success : function ({data}) {
 

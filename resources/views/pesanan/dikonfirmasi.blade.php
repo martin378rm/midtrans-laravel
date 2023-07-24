@@ -65,7 +65,7 @@
             $.ajax({
                 url : '/api/order/dikonfirmasi',
                 headers : {
-                            'Authorization' :  token
+                            'Authorization' :  'Bearer ' +  token
                         },
                 success : function ({data}) {
 
@@ -100,7 +100,7 @@
                         status : 'Dikemas'
                     },
                     headers : {
-                        'Authorization' : token
+                        'Authorization' : 'Bearer ' +  token
                     },
                     success : function(data) {
                         location.reload()

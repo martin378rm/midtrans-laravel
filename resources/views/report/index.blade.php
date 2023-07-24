@@ -30,7 +30,6 @@
                 </form>
             </div>
         </div>
-
         @if (request()->input('dari'))
 
 
@@ -79,10 +78,10 @@
 
             const token = localStorage.getItem('token')
             $.ajax({
-                url : `/api/reports?dari=${dari}&sampai=${sampai}`,
                 headers : {
-                            'Authorization' :  token
-                        },
+                    'Authorization' : 'Bearer ' +  token
+                },
+                url : `/api/reports?dari=${dari}&sampai=${sampai}`,
                 success : function ({data}) {
 
                     let row;

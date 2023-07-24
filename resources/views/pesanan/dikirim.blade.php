@@ -65,7 +65,7 @@
             $.ajax({
                 url : '/api/order/dikirim',
                 headers : {
-                            'Authorization' :  token
+                            'Authorization' :  'Bearer ' +  token
                         },
                 success : function ({data}) {
 
@@ -100,7 +100,7 @@
                         status : 'Diterima'
                     },
                     headers : {
-                        'Authorization' : token
+                        'Authorization' : 'Bearer ' +  token
                     },
                     success : function(data) {
                         location.reload()

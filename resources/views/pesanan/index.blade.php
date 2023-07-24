@@ -65,7 +65,7 @@
             $.ajax({
                 url : '/api/order/baru',
                 headers : {
-                            'Authorization' :  token
+                            'Authorization' :  'Bearer ' +  token
                         },
                 success : function ({data}) {
 
@@ -100,7 +100,7 @@
                         status : 'Dikonfirmasi'
                     },
                     headers : {
-                        'Authorization' : token
+                        'Authorization' : 'Bearer ' +  token
                     },
                     success : function(data) {
                         location.reload()
