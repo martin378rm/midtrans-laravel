@@ -28,10 +28,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::post('logout_member', [AuthController::class, 'logout_member']);
+// admin
 Route::get('login', [AuthController::class, 'index']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('logout', [AuthController::class, 'logout']);
+
+// user login
+Route::get('login_member', [AuthController::class, 'login_member']);
+Route::post('login_member', [AuthController::class, 'login_member_action']);
+Route::get('logout_member', [AuthController::class, 'logout_member']);
+
+// user register
+Route::get('register_member', [AuthController::class, 'register_member']);
+Route::post('register_member', [AuthController::class, 'register_member_action']);
 
 
 // dashboard
