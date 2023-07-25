@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\TentangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -24,9 +26,6 @@ use App\Http\Controllers\TestimoniController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 // admin
 Route::get('login', [AuthController::class, 'index']);
@@ -72,5 +71,23 @@ Route::get('pesanan/selesai', [OrderController::class, 'selesai_list']);
 //report
 Route::get('/laporan', [ReportController::class, 'index']);
 
+// about
+Route::get('/tentang', [TentangController::class, 'index']);
+Route::post('/tentang/{about}', [TentangController::class, 'update']);
+
+
+
 // payment
 Route::get('/payment', [PaymentController::class, 'list']);
+
+
+// home routes
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/products/{category}', [HomeController::class, 'products']);
+Route::get('/product/{id}', [HomeController::class, 'product']);
+Route::get('/cart', [HomeController::class, 'cart']);
+Route::get('/checkout', [HomeController::class, 'checkout']);
+Route::get('/orders', [HomeController::class, 'orders']);
+Route::get('/about', [HomeController::class, 'about']);
+Route::get('/contact', [HomeController::class, 'contact']);
+Route::get('/faq', [HomeController::class, 'faq']);

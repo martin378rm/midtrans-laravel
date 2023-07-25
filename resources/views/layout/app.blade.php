@@ -104,6 +104,14 @@
                     <span>Laporan Pesanan</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/tentang">
+                    <i class="fas fa-fw fa-globe"></i>
+                    <span>Tentang</span>
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class="fas fa-fw fa-sign-out-alt"></i>
