@@ -191,7 +191,7 @@
                         url : '/api/products/' + id,
                         type : 'DELETE',
                         headers : {
-                            'Authorization' :  token
+                            'Authorization' :'Bearer ' +  token
                         },
                         success : function (data) {
                            if (data.message === 'deleted success'){
@@ -233,7 +233,7 @@
                         contentType: false,
                         processData: false,
                         headers : {
-                            'Authorization' :  token
+                            'Authorization' :'Bearer ' +  token
                         },
                         success : function(data) {
                             if (data.success) {
@@ -280,7 +280,7 @@
                         contentType: false,
                         processData: false,
                         headers : {
-                            'Authorization' :  token
+                            'Authorization' :'Bearer ' +  token
                         },
                         success : function(data) {
                             if (data.success) {

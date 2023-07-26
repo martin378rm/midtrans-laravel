@@ -112,7 +112,7 @@
                             <td>${value.description}</td>
                             <td><img src='/uploads/${value.image}' width="100" height="100"></td>
                             <td>
-                                <a data-toggle="modal" href="#modal-form" data-id="${value.id}" class="btn btn-warning mb-2  modal-ubah">Edit</a>
+                                <a data-toggle="modal" href="#modal-form" data-id="${value.id}" class="btn btn-warning modal-ubah">Edit</a>
                                 <a  href="#" data-id="${value.id}" class="btn btn-danger btn-hapus">Hapus</a>
                             </td>
                         </tr>
@@ -134,7 +134,7 @@
                         url : '/api/sub-categories/' + id,
                         type : 'DELETE',
                         headers : {
-                            'Authorization' :  token
+                            'Authorization' :'Bearer ' +  token
                         },
                         success : function (data) {
                            if (data.message === 'deleted success'){
@@ -168,7 +168,7 @@
                         contentType: false,
                         processData: false,
                         headers : {
-                            'Authorization' :  token
+                            'Authorization' :'Bearer ' +  token
                         },
                         success : function(data) {
                             if (data.success) {
@@ -207,7 +207,7 @@
                         contentType: false,
                         processData: false,
                         headers : {
-                            'Authorization' :  token
+                            'Authorization' :'Bearer ' +  token
                         },
                         success : function(data) {
                             if (data.success) {

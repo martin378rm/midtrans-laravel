@@ -103,6 +103,10 @@
                                             <a href="/about">About</a>
                                         </li>
 
+                                        @php
+                                            $categories = App\Models\Category::all();
+                                        @endphp
+
                                         <li class="dropdown">
                                             <a href="#">Shop</a>
                                             <i class="fa fa-angle-down dropdown-trigger"></i>
@@ -110,16 +114,24 @@
                                                 <li>
                                                     <div class="megamenu-wrap container">
                                                         <div class="row">
+                                                            @foreach ($categories as $category)
+
                                                             <div class="col-md-3 megamenu-item">
                                                                 <ul class="menu-list">
                                                                     <li>
-                                                                        <span>Shop Pages</span>
+                                                                        <span>{{$category->nama_kategory}}</span>
                                                                     </li>
+                                                                    @php
+                                                                    $subcategories = App\Models\Subcategory::where('category_id', $category->id)->get();
+                                                                    @endphp
+                                                                    @foreach ($subcategories as $subcategory)
                                                                     <li>
-                                                                        <a href="/products/1">Catalog no Sidebar</a>
+                                                                        <a href="/products/{{$subcategory->id}}">{{$subcategory->nama_subcategory}}</a>
                                                                     </li>
+                                                                    @endforeach
                                                                 </ul>
                                                             </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </li>

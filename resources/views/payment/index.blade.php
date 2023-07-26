@@ -141,7 +141,7 @@
                         url : '/api/payments/' + id,
                         type : 'DELETE',
                         headers : {
-                            'Authorization' :  token
+                            'Authorization' :'Bearer ' +  token
                         },
                         success : function (data) {
                            if (data.message === 'deleted success'){

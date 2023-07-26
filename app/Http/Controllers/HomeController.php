@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Slider;
+use App\Models\Testimoni;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home.index');
+
+        $sliders = Slider::all();
+        $categories = Category::all();
+        $testimoni = Testimoni::all();
+        $products = Product::skip(0)->take(8)->get();
+        return view('home.index', compact('sliders', 'categories', 'testimoni', 'products'));
     }
     public function products()
     {
