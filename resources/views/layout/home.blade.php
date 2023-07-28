@@ -66,8 +66,11 @@
                                 <!-- Logo -->
                                 <div class="logo-container">
                                     <div class="logo-wrap">
-                                        <a href="/front/index.html">
-                                            <img class="logo-dark2" src="/front/img/logo_dark2 - .png" alt="logo">
+                                        <a href="/">
+                                            @php
+                                            $about = App\Models\About::first();
+                                            @endphp
+                                            <img class="logo-dark2" src="uploads/{{$about->logo}}" alt="logo">
                                         </a>
                                     </div>
                                 </div>

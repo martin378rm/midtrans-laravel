@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\About;
 use App\Models\Slider;
+use App\Models\Product;
+use App\Models\Category;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
 
@@ -19,14 +20,17 @@ class HomeController extends Controller
         $products = Product::skip(0)->take(8)->get();
         return view('home.index', compact('sliders', 'categories', 'testimoni', 'products'));
     }
-    public function products()
+    public function products($id_subcategory)
     {
-        return view('home.products');
+        $products = Product::where('subcategory_id', $id_subcategory)->get();
+        return view('home.products', compact('products'));
     }
 
-    public function product()
+    public function product($id)
     {
-        return view('home.product');
+        $product = Product::find($id);
+        $latestProduct = Product::orderByDesc('created_at')->offset(0)->limit(5)->get();
+        return view('home.product', compact('product', 'latestProduct'));
     }
 
     public function cart()
@@ -46,12 +50,15 @@ class HomeController extends Controller
 
     public function about()
     {
-        return view('home.about');
+        $about = About::first();
+        $testimoni = Testimoni::all();
+        return view('home.about', compact('about', 'testimoni'));
     }
 
     public function contact()
     {
-        return view('home.contact');
+        $about = About::first();
+        return view('home.contact', compact('about'));
     }
 
     public function faq()
