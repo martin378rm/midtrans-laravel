@@ -10,13 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('members', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_member');
-            $table->string('no_hp');
-            $table->string('email');
-            $table->string('password');
-            $table->timestamps();
+        Schema::table('members', function (Blueprint $table) {
+            //
+            $table->dropColumn('provinsi');
+            $table->dropColumn('kabupaten');
+            $table->dropColumn('kecamatan');
+            $table->dropColumn('detail_alamat');
         });
     }
 
@@ -25,6 +24,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('members');
+        Schema::table('members', function (Blueprint $table) {
+            //
+        });
     }
 };

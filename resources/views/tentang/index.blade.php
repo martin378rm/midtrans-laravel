@@ -46,6 +46,16 @@ Tentang
                             value="{{$about->telepon}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Nama</label>
+                        <input type="text" class="form-control" name="nama" placeholder="Nama" required
+                            value="{{$about->nama}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="">No Rekening</label>
+                        <input type="text" class="form-control" name="no_rekening" placeholder="No Rekening" required
+                            value="{{$about->no_rekening}}">
+                    </div>
+                    <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">Submit</button>
                     </div>
                 </form>

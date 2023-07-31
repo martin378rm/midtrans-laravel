@@ -92,8 +92,9 @@
                     $warna = explode(',', $product->warna)
                     @endphp
 
-                    @foreach ($warna as $warna)
-                    <a href="#" class="size-xs selected">{{$warna}}</a>
+                    @foreach ($warna as $color)
+                    <input type="radio" name="color" id="{{$color}}" value="{{$color}}" class="color">
+                    <label for="{{$color}}" style="margin-right: 20px">{{$color}}</label>
                     @endforeach
                 </div>
 
@@ -104,7 +105,8 @@
                     @endphp
 
                     @foreach ($sizes as $size)
-                    <a href="#" class="size-xs selected">{{$size}}</a>
+                    <input type="radio" name="size" id="{{$size}}" value="{{$size}}" class="size">
+                    <label for="{{$size}}" style="margin-right: 20px">{{$size}}</label>
                     @endforeach
                 </div>
 
@@ -112,7 +114,7 @@
                     <span>Qty:</span>
 
                     <div class="quantity buttons_added">
-                        <input type="number" step="1" min="0" value="1" title="Qty" class="input-text qty text" />
+                        <input type="number" step="1" min="0" value="1" title="Qty" class="input-text jumlah qty text" />
                         <div class="quantity-adjust">
                             <a href="#" class="plus">
                                 <i class="fa fa-angle-up"></i>
@@ -256,3 +258,41 @@
 </section> <!-- end related products -->
 
 @endsection
+
+@push('js')
+
+<script>
+    $(function(){
+        $('.add-to-cart').click(function(e){
+            e.preventDefault()
+            id_member = {{Auth::guard('webmember')->user()->id}}
+            id_barang = {{$product->id}}
+            jumlah = $('.jumlah').val()
+            size = $('.size').val()
+            color = $('.color').val()
+            total = {{$product->harga}}*jumlah
+            is_checkout = 0
+            $.ajax({
+                url : '/cart',
+                method : "POST",
+                headers: {
+                    'X-CSRF-TOKEN': "{{csrf_token()}}",
+                },
+                data : {
+                    id_member,
+                    id_barang,
+                    jumlah,
+                    size,
+                    color,
+                    total,
+                    is_checkout,
+                },
+                success : function(data){
+                   console.log(data);
+                }
+            });
+        })
+    })
+</script>
+
+@endpush

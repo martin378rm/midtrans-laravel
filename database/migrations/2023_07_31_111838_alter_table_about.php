@@ -10,13 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('members', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_member');
-            $table->string('no_hp');
-            $table->string('email');
-            $table->string('password');
-            $table->timestamps();
+        Schema::table('about', function (Blueprint $table) {
+            //
+            $table->string('nama')->nullable();
+            $table->string('no_rekening')->nullable();
         });
     }
 
@@ -25,6 +22,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('members');
+        Schema::table('about', function (Blueprint $table) {
+            //
+            $table->dropColumn('nama');
+            $table->dropColumn('no_rekening');
+        });
     }
 };

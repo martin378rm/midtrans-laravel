@@ -91,3 +91,6 @@ Route::get('/orders', [HomeController::class, 'orders']);
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/contact', [HomeController::class, 'contact']);
 Route::get('/faq', [HomeController::class, 'faq']);
+
+
+Route::post('/cart', [HomeController::class, 'add_to_cart']);

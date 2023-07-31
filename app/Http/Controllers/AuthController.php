@@ -107,18 +107,19 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            Session::flash('errors', $validator->errors()->toArray());
+            return redirect('/login_member');
         }
 
         $credentials = $request->only('email', 'password');
 
+
         $member = Member::where('email', $request->email)->first();
+        $test = Auth::guard('webmember')->attempt($credentials);
         if ($member) {
-            if (Hash::check($request->password, $member->password)) {
+            if ($test) {
                 $request->session()->regenerate();
-                return response()->json([
-                    'message' => 'Success'
-                ]);
+                return redirect('/');
             } else {
                 return response()->json([
                     'message' => 'failed',
@@ -144,10 +145,6 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "nama_member" => "required",
-            "provinsi" => "required",
-            "kabupaten" => "required",
-            "kecamatan" => "required",
-            "detail_alamat" => "required",
             "no_hp" => "required",
             "email" => "required",
             "password" => "required|same:konfirmasi_password",
@@ -161,7 +158,7 @@ class AuthController extends Controller
         }
 
         $input = $request->all();
-        $input['password'] = bcrypt($request->password);
+        $input['password'] = Hash::make($request->password);
 
         Member::create($input);
         return redirect('/login_member');
@@ -186,9 +183,8 @@ class AuthController extends Controller
 
     public function logout_member()
     {
-        Session::flush();
-
-        return redirect('/login_member');
+        Auth::guard('webmember')->logout();
+        return redirect('/');
     }
 
 }

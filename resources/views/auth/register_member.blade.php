@@ -41,26 +41,6 @@
                             class="block border-2 rounded-full mt-2 py-2 px-5 w-full" required>
                     </div>
                     <div class="my-3">
-                        <label class="font-semibold" for="detail_alamat">Alamat</label>
-                        <input type="text" placeholder="Alamat" name="detail_alamat" id="detail_alamat"
-                            class="block border-2 rounded-full mt-2 py-2 px-5 w-full" required>
-                    </div>
-                    <div class="my-3">
-                        <label class="font-semibold" for="provinsi">Provinsi</label>
-                        <input type="text" placeholder="Provinsi" name="provinsi" id="provinsi"
-                            class="block border-2 rounded-full mt-2 py-2 px-5 w-full" required>
-                    </div>
-                    <div class="my-3">
-                        <label class="font-semibold" for="kabupaten">Kabupaten</label>
-                        <input type="text" placeholder="Kabupaten" name="kabupaten" id="kabupaten"
-                            class="block border-2 rounded-full mt-2 py-2 px-5 w-full" required>
-                    </div>
-                    <div class="my-3">
-                        <label class="font-semibold" for="kecamatan">Kecamatan</label>
-                        <input type="text" placeholder="Kecamatan" name="kecamatan" id="kecamatan"
-                            class="block border-2 rounded-full mt-2 py-2 px-5 w-full" required>
-                    </div>
-                    <div class="my-3">
                         <label class="font-semibold" for="konfirmasi_password">Konfirmasi Password</label>
                         <input type="password" placeholder="konfirmasi_password" name="konfirmasi_password" id="konfirmasi_password"
                             class="block border-2 rounded-full mt-2 py-2 px-5 w-full" required>
@@ -83,6 +63,17 @@
             </div>
         </div>
     </div>
+
+     <!-- Bootstrap core JavaScript-->
+     <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
+     <script src="{{'admin/vendor/bootstrap/js/bootstrap.bundle.min.js'}}"></script>
+
+     <!-- Core plugin JavaScript-->
+     <script src="{{asset('admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+     <!-- Custom scripts for all pages-->
+     <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
+
 </body>
 
 </html>
