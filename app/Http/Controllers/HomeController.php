@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -37,14 +38,26 @@ class HomeController extends Controller
 
     public function cart()
     {
-        $carts = Cart::where('id_member', Auth::guard('webmember')->user()->id)->get();
 
-        return view('home.cart', compact('carts'));
+        if (!Auth::guard('webmember')->user()) {
+            return redirect('/login_member');
+        }
+
+        $raja_ongkir = config('rajaongkir.key');
+        $response = Http::withHeaders([
+            'key' => $raja_ongkir
+        ])->get('https://api.rajaongkir.com/starter/province');
+
+        $province = $response['rajaongkir']['results'];
+
+        $cart = Cart::where('id_member', Auth::guard('webmember')->user()->id)->get();
+        $cart_total = Cart::where('id_member', Auth::guard('webmember')->user()->id)->where('is_checkout', 0)->sum('total');
+        return view('home.cart', compact('cart', 'province', 'cart_total'));
     }
 
     public function add_to_cart(Request $request)
     {
-        // dd($request);
+
         Cart::create($request->all());
     }
 
@@ -57,6 +70,34 @@ class HomeController extends Controller
     public function checkout()
     {
         return view('home.checkout');
+    }
+
+    public function get_city($id)
+    {
+        $raja_ongkir = config('rajaongkir.key');
+        $response = Http::withHeaders([
+            'key' => $raja_ongkir
+        ])->get('https://api.rajaongkir.com/starter/city?province=' . $id);
+
+        $cities = $response['rajaongkir']['results'];
+        return response()->json([
+            'payload' => $cities
+        ]);
+    }
+
+    public function get_ongkir($tujuan, $weight)
+    {
+        $raja_ongkir = config('rajaongkir.key');
+        $response = Http::withHeaders([
+            'key' => $raja_ongkir
+        ])->post('https://api.rajaongkir.com/starter/cost', [
+                    'origin' => '455',
+                    'destination' => $tujuan,
+                    'weight' => $weight,
+                    'courier' => 'jne'
+                ]);
+
+        return $response['rajaongkir']['results']['0']['costs']['0']['cost'];
     }
 
     public function orders()

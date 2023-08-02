@@ -2,7 +2,8 @@
 
 
 return [
-    "key" => env("MIDTRANS_SERVER_KEY")
+    "key" => env("
+    RAJA_ONGKIR_API_KEY")
 ];
 
 ?>

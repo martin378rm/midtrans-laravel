@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 class TicketController extends Controller
 {
     //
+
+
     public function buy(Request $request)
     {
         $validator = Validator::make($request->all(), [

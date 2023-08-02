@@ -105,6 +105,7 @@
                     @endphp
 
                     @foreach ($sizes as $size)
+    
                     <input type="radio" name="size" id="{{$size}}" value="{{$size}}" class="size">
                     <label for="{{$size}}" style="margin-right: 20px">{{$size}}</label>
                     @endforeach
@@ -288,7 +289,7 @@
                     is_checkout,
                 },
                 success : function(data){
-                   console.log(data);
+                    window.location.href = '/cart'
                 }
             });
         })

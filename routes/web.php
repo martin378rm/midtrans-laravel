@@ -93,4 +93,9 @@ Route::get('/contact', [HomeController::class, 'contact']);
 Route::get('/faq', [HomeController::class, 'faq']);
 
 
+// add to cart
 Route::post('/cart', [HomeController::class, 'add_to_cart']);
+
+Route::get('/delete_from_cart/{cart}', [HomeController::class, 'delete_from_cart']);
+Route::get('/city/{id}', [HomeController::class, 'get_city']);
+Route::get('/get_ongkir/{tujuan}/{weight}', [HomeController::class, 'get_ongkir']);

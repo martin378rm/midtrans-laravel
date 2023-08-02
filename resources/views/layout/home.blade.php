@@ -326,7 +326,7 @@
     <script type="text/javascript" src="/front/js/plugins.js"></script>
     <script type="text/javascript" src="/front/js/scripts.js"></script>
 
-        @stack('js')
+    @stack('js')
 
 </body>
 
