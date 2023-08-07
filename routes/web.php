@@ -99,3 +99,7 @@ Route::post('/cart', [HomeController::class, 'add_to_cart']);
 Route::get('/delete_from_cart/{cart}', [HomeController::class, 'delete_from_cart']);
 Route::get('/city/{id}', [HomeController::class, 'get_city']);
 Route::get('/get_ongkir/{tujuan}/{weight}', [HomeController::class, 'get_ongkir']);
+
+Route::post('/checkout', [HomeController::class, 'checkout_order']);
+Route::post('/payment', [HomeController::class, 'payment']);
+Route::post('/pesanan_selesai/{order}', [HomeController::class, 'pesanan_selesai']);
